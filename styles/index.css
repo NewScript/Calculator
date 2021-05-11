@@ -38,6 +38,11 @@
     background: chocolate;
 
     padding-top: 3px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
 }
 
 #operators{
@@ -49,3 +54,11 @@
 }
 
 /* ------------------------------------- */
+
+#formulation{
+    
+}
+
+#valueOrTotal{
+    font-size: 40px;
+}
