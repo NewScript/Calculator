@@ -29,7 +29,7 @@
 /* ------------------------------------- */
 
 #viewCalculations, #operators{
-    padding: 0px 3px;
+    padding: 3px;
 }
 
 #viewCalculations{
@@ -63,6 +63,11 @@
     justify-content: center;
     align-items: center;
     font-size: 30px;
+}
+
+.simbols:hover{
+    background: rgb(109, 187, 86);
+    cursor: pointer;
 }
 
 #valueOrTotal{
