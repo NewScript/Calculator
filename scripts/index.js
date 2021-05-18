@@ -22,7 +22,12 @@ function clear(){
 };
 
 function backSpace(){
-    console.log($value.textContent);
+    let temp = ($value.textContent).slice(0,(($value.textContent).length - 1));
+    $value.textContent = temp;
+    if(!temp.length){
+        $value.textContent = '0';
+        $flagZero = true;
+    }
 }
 
 function noEnableZeroLeft(e){
