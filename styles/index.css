@@ -24,6 +24,7 @@
 
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 /* ------------------------------------- */
@@ -58,18 +59,27 @@
 
 /* ------------------------------------- */
 
-.simbols{
+.symbols{
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 30px;
 }
 
-.simbols:hover{
+.symbols:hover{
     background: rgb(109, 187, 86);
     cursor: pointer;
 }
 
-#valueOrTotal{
+.action:hover, .operator:hover{
+    background: rgb(223, 95, 106);
+}
+
+#decimal:hover, #signal:hover{
+    background: rgb(210, 224, 76);
+}
+
+
+#value{
     font-size: 40px;
 }

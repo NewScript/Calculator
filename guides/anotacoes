@@ -1,5 +1,9 @@
 Calculator
 
 - Limitar os cálculos a 8 dígitos
+- Não utilizar eval()
 
 - Restante, normal
+
+
+

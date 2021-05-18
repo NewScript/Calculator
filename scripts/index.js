@@ -1,22 +1,52 @@
-const $allClear = document.getElementById('ac');
-const $clear = document.getElementById('c');
-const $backSpace = document.getElementById('bs');
 const $formulation = document.getElementById('formulation');
-const $valueOrTotal = document.getElementById('valueOrTotal');
+const $value = document.getElementById('value');
+
+const $action = document.getElementsByClassName('action');
+const $allClear = $action[0];
+const $clear = $action[1];
+const $backSpace = $action[2];
+
+const $operands = document.getElementsByClassName('operand');
+
+let $flagZero = true;
 
 function allClear(){
-    $formulation.textContent = '';
-    $valueOrTotal.textContent = '0';
+    $formulation.textContent = '0';
+    $value.textContent = '0';
+    $flagZero = true;
 };
 
 function clear(){
-    $valueOrTotal.textContent = '0';
+    $value.textContent = '0';
+    $flagZero = true;
 };
 
 function backSpace(){
-    console.log(typeof($valueOrTotal.textContent));
+    console.log($value.textContent);
+}
+
+function noEnableZeroLeft(e){
+    if(($value.textContent).length == 1 && e.target.id == 0){
+        $value.textContent = '0';
+    }
+}
+
+function includeDigit(e){
+    if(!(($value.textContent).length == 1 && e.target.id == 0)){
+        if($flagZero){
+            $value.textContent = '';
+            $value.textContent += e.target.id;
+            $flagZero = false;
+        }else{
+            $value.textContent += e.target.id;
+        }
+    }
 }
 
 $allClear.addEventListener('click', allClear);
 $clear.addEventListener('click', clear);
 $backSpace.addEventListener('click', backSpace);
+
+for (const iterator of $operands) {
+    iterator.addEventListener('click', includeDigit);
+}
