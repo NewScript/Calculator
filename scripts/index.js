@@ -8,17 +8,21 @@ const $backSpace = $action[2];
 
 const $operands = document.getElementsByClassName('operand');
 
-let $flagZero = true;
+const $operators = document.getElementsByClassName('operator');
+
+let $flagZeroValue = true;
+let $flagZeroFormulation = true;
 
 function allClear(){
     $formulation.textContent = '0';
     $value.textContent = '0';
-    $flagZero = true;
+    $flagZeroValue = true;
+    $flagZeroFormulation = true;
 };
 
 function clear(){
     $value.textContent = '0';
-    $flagZero = true;
+    $flagZeroValue = true;
 };
 
 function backSpace(){
@@ -26,7 +30,7 @@ function backSpace(){
     $value.textContent = temp;
     if(!temp.length){
         $value.textContent = '0';
-        $flagZero = true;
+        $flagZeroValue = true;
     }
 }
 
@@ -38,13 +42,27 @@ function noEnableZeroLeft(e){
 
 function includeDigit(e){
     if(!(($value.textContent).length == 1 && e.target.id == 0)){
-        if($flagZero){
+        if($flagZeroValue){
             $value.textContent = '';
             $value.textContent += e.target.id;
-            $flagZero = false;
+            $flagZeroValue = false;
         }else{
             $value.textContent += e.target.id;
         }
+    }
+}
+
+function formulation(e){
+    if($flagZeroFormulation){
+        $formulation.textContent = '';
+        $formulation.textContent += `${$value.textContent} ${e.target.id} `;
+        $value.textContent = '0';
+        $flagZeroValue = true;
+        $flagZeroFormulation = false;
+    }else{
+        $formulation.textContent += `${$value.textContent} ${e.target.id} `;
+        $value.textContent = '0';
+        $flagZeroValue = true;
     }
 }
 
@@ -54,4 +72,8 @@ $backSpace.addEventListener('click', backSpace);
 
 for (const iterator of $operands) {
     iterator.addEventListener('click', includeDigit);
+}
+
+for (const iterator of $operators) {
+    iterator.addEventListener('click', formulation);
 }
