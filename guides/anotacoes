@@ -9,11 +9,17 @@ Calculator
 
 ------------
 
+Bug 001
+
 Digitando apenas um número e em seguida
 o zero, o zero Não é incluído, o zero só é
 incluído se houver dois ou mais números
 
+Resolvido
+
 ------------
+
+Bug 002
 
 Na formulation o primeiro número incluso fica com
 um zero a esquerda

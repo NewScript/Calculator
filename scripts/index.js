@@ -41,14 +41,14 @@ function noEnableZeroLeft(e){
 }
 
 function includeDigit(e){
-    if(!(($value.textContent).length == 1 && e.target.id == 0)){
-        if($flagZeroValue){
+    if($flagZeroValue){
+        if(!(($value.textContent).length == 1 && e.target.id == '0')){
             $value.textContent = '';
             $value.textContent += e.target.id;
             $flagZeroValue = false;
-        }else{
-            $value.textContent += e.target.id;
         }
+    }else{
+        $value.textContent += e.target.id;
     }
 }
 
