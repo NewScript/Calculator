@@ -12,6 +12,7 @@ const $operators = document.getElementsByClassName('operator');
 
 let $flagZeroValue = true;
 let $flagZeroFormulation = true;
+let $flagPoint = 1;
 
 function allClear(){
     $formulation.textContent = '0';
@@ -48,6 +49,7 @@ function includeDigit(e){
             $flagZeroValue = false;
         }
     }else{
+        includePoint();
         $value.textContent += e.target.id;
     }
 }
@@ -63,6 +65,15 @@ function formulation(e){
         $formulation.textContent += `${$value.textContent} ${e.target.id} `;
         $value.textContent = '0';
         $flagZeroValue = true;
+    }
+}
+
+function includePoint(){
+    if($flagPoint >= 3){
+        $value.textContent += '.';
+        $flagPoint = 1;
+    }else{
+        $flagPoint++;
     }
 }
 
