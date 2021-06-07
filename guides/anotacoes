@@ -27,3 +27,10 @@ um zero a esquerda
 Resolvido
 
 ------------
+
+Bug 003
+
+O Ponto é colocado depois do terceiro digito, mas
+tem que ser colocado após o primeiro digito da seqüência de 3
+
+Obs. o Ponto deve ser colocado da direita para a esquerda

@@ -10,9 +10,12 @@ const $operands = document.getElementsByClassName('operand');
 
 const $operators = document.getElementsByClassName('operator');
 
+const $decimal = document.getElementById('decimal');
+
 let $flagZeroValue = true;
 let $flagZeroFormulation = true;
 let $flagPoint = 1;
+let $flagComma = false;
 
 function allClear(){
     $formulation.textContent = '0';
@@ -42,16 +45,16 @@ function noEnableZeroLeft(e){
 }
 
 function includeDigit(e){
-    if($flagZeroValue){
-        if(!(($value.textContent).length == 1 && e.target.id == '0')){
-            $value.textContent = '';
-            $value.textContent += e.target.id;
-            $flagZeroValue = false;
-        }
-    }else{
-        includePoint();
+    // if($flagZeroValue){
+    //     if(!(($value.textContent).length == 1 && e.target.id == '0')){
+    //         $value.textContent = '';
+    //         $value.textContent += e.target.id;
+    //         $flagZeroValue = false;
+    //     }
+    // }else{
         $value.textContent += e.target.id;
-    }
+        includePoint();
+    // }
 }
 
 function formulation(e){
@@ -69,11 +72,15 @@ function formulation(e){
 }
 
 function includePoint(){
-    if($flagPoint >= 3){
-        $value.textContent += '.';
-        $flagPoint = 1;
-    }else{
-        $flagPoint++;
+    for(let i = $value.textContent.length; i < 0; i + 4 ){
+       
+    }
+}
+
+function includeComma(){
+    if(!$flagComma){
+        $value.textContent += ',';
+        $flagComma = true;
     }
 }
 
@@ -88,3 +95,5 @@ for (const iterator of $operands) {
 for (const iterator of $operators) {
     iterator.addEventListener('click', formulation);
 }
+
+$decimal.addEventListener('click', includeComma);
