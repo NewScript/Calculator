@@ -14,7 +14,7 @@ const $decimal = document.getElementById('decimal');
 
 let $flagZeroValue = true;
 let $flagZeroFormulation = true;
-let $flagPoint = 1;
+let $flagPoint = 3;
 let $flagComma = false;
 
 function allClear(){
@@ -22,11 +22,13 @@ function allClear(){
     $value.textContent = '0';
     $flagZeroValue = true;
     $flagZeroFormulation = true;
+    $flagPoint = 3;
 };
 
 function clear(){
     $value.textContent = '0';
     $flagZeroValue = true;
+    $flagPoint = 3;
 };
 
 function backSpace(){
@@ -35,6 +37,7 @@ function backSpace(){
     if(!temp.length){
         $value.textContent = '0';
         $flagZeroValue = true;
+        $flagPoint = 3;
     }
 }
 
@@ -45,16 +48,18 @@ function noEnableZeroLeft(e){
 }
 
 function includeDigit(e){
-    // if($flagZeroValue){
-    //     if(!(($value.textContent).length == 1 && e.target.id == '0')){
-    //         $value.textContent = '';
-    //         $value.textContent += e.target.id;
-    //         $flagZeroValue = false;
-    //     }
-    // }else{
+    if($flagZeroValue){
+        if(!(($value.textContent).length == 1 && e.target.id == '0')){
+            $value.textContent = '';
+            $value.textContent += e.target.id;
+            $flagZeroValue = false;
+            $flagPoint = 3;
+            includePoint();
+        }
+    }else{
         $value.textContent += e.target.id;
         includePoint();
-    // }
+    }
 }
 
 function formulation(e){
@@ -71,9 +76,28 @@ function formulation(e){
     }
 }
 
+// function includePoint(){
+//     for(let i = $value.textContent.length; i > 0; i-- ){
+//        if($value.textContent.length >= $flagPoint){
+//            $value.textContent += '.';
+//            $flagPoint += 4;
+//        }
+//     }
+// }
+
+// function includePoint(){
+//     for(let i = $value.textContent.length; i > 0; i-- ){
+//        if($value.textContent.length >= $flagPoint){
+//            $value.textContent += '.';
+//            $formulation.textContent = $value.textContent[i-1];
+//            $flagPoint += 4;
+//        }
+//     }
+// }
+
 function includePoint(){
-    for(let i = $value.textContent.length; i < 0; i + 4 ){
-       
+    for(let i = ($value.textContent.length - 1); i >= 0; i-- ){
+        console.log($value.textContent[i]);
     }
 }
 
