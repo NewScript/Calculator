@@ -5,7 +5,12 @@ Calculator
 
 - Restante, normal
 
+- variavel.toLocaleString('pt-BR');
+Não pega a , e para obter um ponto flutuante o Calculator
+deve trocar a vírgula por ponto na hora de calcular
 
+Pesquisa breve indica que tabalho com vírgula não possui
+padrão em JS
 
 ------------
 
@@ -34,3 +39,21 @@ O Ponto é colocado depois do terceiro digito, mas
 tem que ser colocado após o primeiro digito da seqüência de 3
 
 Obs. o Ponto deve ser colocado da direita para a esquerda
+pegar todos os índices que terão pontos e só depois colorcr
+os pontos senão os pontos vão mudar os índices
+
+
+
+
+40,85697
+80,69874
+
+121,55571
+
+40 + 80 = 120
+
+120 + 0.85697 + 0.69874
+121,55571
+
+0.85697 + 0.69874
+1,55571
