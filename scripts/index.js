@@ -1,5 +1,6 @@
 const $formulation = document.getElementById('formulation');
 const $representation = document.getElementById('value');
+const $signal = document.getElementById('signal');
 
 const $action = document.getElementsByClassName('action');
 const $allClear = $action[0];
@@ -15,7 +16,9 @@ const $decimal = document.getElementById('decimal');
 let $representValue = '';
 let $integerValue = '';
 let $decimalValue = '';
+
 let $flagComma = false;
+let $flagSignal = true;
 
 function representValue(){
     if (!$flagComma) {
@@ -136,6 +139,19 @@ function includeComma() {
     }
 }
 
+function changeSign(){
+    if($flagSignal){
+        $integerValue = '-'+$integerValue;
+        $flagSignal = false;
+    }else{
+        $integerValue = $integerValue.slice(1);
+        $flagSignal = true;
+    }
+    representValue();
+    console.log($integerValue);
+    console.log('chamou changeSign');
+}
+
 $allClear.addEventListener('click', allClear);
 $clear.addEventListener('click', clear);
 $backSpace.addEventListener('click', backSpace);
@@ -149,3 +165,5 @@ for (const iterator of $operators) {
 }
 
 $decimal.addEventListener('click', includeComma);
+
+$signal.addEventListener('click', changeSign);

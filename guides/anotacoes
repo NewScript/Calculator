@@ -57,3 +57,26 @@ os pontos senão os pontos vão mudar os índices
 
 0.85697 + 0.69874
 1,55571
+
+Resolvido
+
+------------
+
+Bugs 004
+
+Após a colocação de pontos e vírgulas...
+
+Ao ativar a função changeSign():
+
+Na maior parte das vezes tudo funciona normalmente,
+porém:
+
+As vezes some o primeiro número ao redefinir o signal
+
+As vezes a representação inteira volta a '0'
+
+Talvez seja relacionado com a funçao de backSpace...
+
+--
+
+O zero não pode ser signalizado
