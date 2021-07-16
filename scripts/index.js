@@ -1,169 +1,147 @@
-const $formulation = document.getElementById('formulation');
-const $representation = document.getElementById('value');
-const $signal = document.getElementById('signal');
+const viewCalculation = {
+    calculationFormulation: document.getElementById('calculationFormulation'),
+    numberPresentation: document.getElementById('numberPresentation')
+};
 
-const $action = document.getElementsByClassName('action');
-const $allClear = $action[0];
-const $clear = $action[1];
-const $backSpace = $action[2];
+const action = {
+    allClear: document.getElementById('allClear'),
+    clear: document.getElementById('clear'),
+    backSpace: document.getElementById('backSpace')
+};
 
-const $operands = document.getElementsByClassName('operand');
+const operator = {
+    sum: document.getElementById('sum'),
+    subtraction: document.getElementById('subtraction'),
+    division: document.getElementById('division'),
+    multiplication: document.getElementById('multiplication'),
+    result: document.getElementById('result')
+};
 
-const $operators = document.getElementsByClassName('operator');
+const operand = document.getElementsByClassName('operand');
 
-const $decimal = document.getElementById('decimal');
+const signalChange = document.getElementById('signalChange');
 
-let $representValue = '';
-let $integerValue = '';
-let $decimalValue = '';
+const comma = document.getElementById('comma');
 
-let $flagComma = false;
-let $flagSignal = true;
+//-------------------------------------------------------------
 
-function representValue(){
-    if (!$flagComma) {
-        $representation.textContent = parseFloat($integerValue).toLocaleString('pt-BR');
-    }else{
-        $representation.textContent = `${parseFloat($integerValue).toLocaleString('pt-BR')},${$decimalValue}`;
-    }
+let $strIntegerValue = '';
+let $strDecimalValue = '';
+let $strSignalValue = '';
+let $strFlagComma ={
+    comma:'',
+    indexComma:''
+};
+
+//-------------------------------------------------------------
+
+function clearValues(){
+    $strIntegerValue = '';
+    $strDecimalValue = '';
+    $strSignalValue = '';
+    $strFlagComma.comma = '';
+    $strFlagComma.indexComma = '';
 }
 
-function storeInteger(){
-
-}
-
-function storeDecimalNumber(){
-
-}
+function numberPresentation(){
+    viewCalculation.numberPresentation.textContent = 
+        `${$strSignalValue}${parseFloat($strIntegerValue).toLocaleString('pt-BR')}${$strFlagComma.comma}${$strDecimalValue}`;
+};
 
 function storeNumber(number){
-    if (!$flagComma) {
-        $integerValue += number;
+    if (!$strFlagComma.comma) {
+        $strIntegerValue += number.toString();
     }else{
-        $decimalValue += number;
-    }
-    // console.log('Inclusao: ' + $integerValue, $decimalValue);
-}
+        $strDecimalValue += number.toString();
+    };
+};
 
 function allClear() {
-    $formulation.textContent = '0';
-    $representation.textContent = '0';
-    $integerValue = '';
-    $decimalValue = '';
-    $flagComma = false;
+    clearValues();
+    viewCalculation.numberPresentation.textContent = '0';
+    viewCalculation.calculationFormulation.textContent = '0';
 };
 
-function clear() {
-    $representation.textContent = '0';
-    $integerValue = '';
-    $decimalValue = '';
-    $flagComma = false;
+function clear(){
+    clearValues();
+    viewCalculation.numberPresentation.textContent = '0';
 };
 
-function backSpace() {
-
-    let indexLetterToErase = (($representation.textContent).length - 1);
-    let letterToErase = $representation.textContent.charAt(indexLetterToErase);
-
-    let indexIntegerValueToErase = (($integerValue).length - 1);
-    let integerToErase = $representation.textContent.charAt(indexIntegerValueToErase);
-    
-    let indexDecimalValueToErase = (($decimalValue).length - 1);
-    let decimalToErase = $representation.textContent.charAt(indexDecimalValueToErase);
-
-    if(letterToErase === ','){
-        let temp = ($representation.textContent).slice(0, indexLetterToErase);
-        $representation.textContent = temp;
-        $flagComma = false;
-        return;
-    }
-
-    if(letterToErase === '.'){
-        let temp = ($representation.textContent).slice(0, indexLetterToErase);
-        $representation.textContent = temp;
-        return;
-    };
-
-    if($flagComma){
-
-        let tempRepresentation = ($representation.textContent).slice(0, indexLetterToErase);
-        let tempDecimal= ($decimalValue).slice(0, indexDecimalValueToErase);
-
-        $representation.textContent = tempRepresentation;
-        $decimalValue = tempDecimal;
-        return;
-
-    }else{
-
-        let tempRepresentation = ($representation.textContent).slice(0, indexLetterToErase);
-        let tempInteger = ($integerValue).slice(0, indexIntegerValueToErase);
-        
-        if(tempRepresentation > 1){
-            $representation.textContent = tempRepresentation;
-            $integerValue = tempInteger;
-            return;
-        }else{
-            $representation.textContent = '0';
-            $integerValue = '';
-            $decimalValue = '';
-        }
-
-    }  
-    
-}
-
-function maximumCharactersAllowed(character) {
-    return ( $integerValue.length + $decimalValue.length  ) < character ? true : false;
+function maximumCharactersAllowed(number) {
+    return ( $strIntegerValue.length + $strDecimalValue.length  ) < number ? true : false;
 }
 
 function includeNumber(e) {
     if (maximumCharactersAllowed(10)) {
         storeNumber(e.target.id);
-        representValue();
-    }
-}
-
-function formulation(e) {
-
-}
-
-function clearPointsOfANumber() {
-    let temp = $representation.textContent.replace(/\./g, '');
-    $representation.textContent = temp;
+        numberPresentation();
+    };
 };
 
 function includeComma() {
-    if (!$flagComma) {
-        $representation.textContent += ',';
-        $flagComma = true;
-    }
-}
+    if (!$strFlagComma.comma) {
+        $strFlagComma.comma = ',';
+        numberPresentation();
+        $strFlagComma.indexComma = (viewCalculation.numberPresentation.textContent).indexOf(',');
+    };
+};
 
 function changeSign(){
-    if($flagSignal){
-        $integerValue = '-'+$integerValue;
-        $flagSignal = false;
+    if(!$strSignalValue){
+        $strSignalValue = '-';
+        numberPresentation();
     }else{
-        $integerValue = $integerValue.slice(1);
-        $flagSignal = true;
-    }
-    representValue();
-    console.log($integerValue);
-    console.log('chamou changeSign');
+        $strSignalValue = '';
+        numberPresentation();
+    };
+};
+
+function bsNumberPresentation(){
+    let indexOfTheCharacterToBeDeleted = ((viewCalculation.numberPresentation.textContent).length - 1);
+    let letterToErase = viewCalculation.numberPresentation.textContent.charAt(indexOfTheCharacterToBeDeleted);
+    viewCalculation.numberPresentation.textContent = (viewCalculation.numberPresentation.textContent).slice(0, indexOfTheCharacterToBeDeleted);
+    if(indexOfTheCharacterToBeDeleted === 0){
+        viewCalculation.numberPresentation.textContent = '0';
+        maximumCharactersAllowed(0);
+    };
+    if(letterToErase === ','){
+        $strFlagComma.comma = '';
+        $strFlagComma.indexComma = '';
+    };
+    if(letterToErase === '-'){
+        $strSignalValue = '';
+    };
 }
 
-$allClear.addEventListener('click', allClear);
-$clear.addEventListener('click', clear);
-$backSpace.addEventListener('click', backSpace);
+function bsValues(){
+    let lengthNumber = ((viewCalculation.numberPresentation.textContent).length);
+    if($strFlagComma.indexComma){
+        $strDecimalValue = (viewCalculation.numberPresentation.textContent).slice($strFlagComma.indexComma + 1, lengthNumber);
+    }else{
+        viewCalculation.numberPresentation.textContent = viewCalculation.numberPresentation.textContent.replace(/[-.]/g, '');
+        $strIntegerValue = (viewCalculation.numberPresentation.textContent).slice(0, lengthNumber);
+    };
+};
 
-for (const iterator of $operands) {
+function backSpace() {
+    bsNumberPresentation();
+    bsValues();
+    console.log('Integer - ' + $strIntegerValue);
+    console.log('Decimal - ' + $strDecimalValue);
+};
+
+//-------------------------------------------------------------
+
+action.allClear.addEventListener('click', allClear);
+
+action.clear.addEventListener('click', clear);
+
+action.backSpace.addEventListener('click', backSpace);
+
+for (const iterator of operand) {
     iterator.addEventListener('click', includeNumber);
 }
 
-for (const iterator of $operators) {
-    iterator.addEventListener('click', formulation);
-}
+comma.addEventListener('click', includeComma);
 
-$decimal.addEventListener('click', includeComma);
-
-$signal.addEventListener('click', changeSign);
+signalChange.addEventListener('click', changeSign);

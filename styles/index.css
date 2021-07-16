@@ -6,6 +6,7 @@
 }
 
 #app{
+    margin-top: 15px;
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -17,10 +18,9 @@
 /* ------------------------------------- */
 
 #calculator{
-    width: 300px;
+    width: 250px;
     height: 400px;
     border: 1px solid #000;
-    margin-top: 10px;
     padding: 3px;
     display: flex;
     flex-direction: column;
@@ -29,16 +29,24 @@
 
 /* ------------------------------------- */
 
-#viewCalculations, #operators{
+#applicationName{
+    height: 8%;
+    margin: 0px auto 3px auto;
+    background-color: cornflowerblue;
+    font-size: 30px;
+}
+
+#viewCalculations, #operations{
     padding: 3px;
 }
 
 #viewCalculations{
     width: 100%;
-    height: 20%;
+    height: 30%;
     background: chocolate;
 
-    padding-top: 3px;
+    margin-bottom: 3px;
+    padding: 3px;
 
     display: flex;
     flex-direction: column;
@@ -47,17 +55,26 @@
     overflow: hidden;
 }
 
-#formulation{
+#calculationFormulation{
+    margin-bottom: 3px;
+    font-size: 15px;
+    text-align: right;
     width: 100%;
     height: 100%;
     resize: none;
 }
 
-#operators{
+#numberPresentation{
+    font-size: 30px;
+    background-color: darkgrey;
+
+}
+
+#operations{
     width: 100%;
-    height: 80%;
+    height: 60%;
     background: rgb(22, 158, 40);
-    padding-top: 3px;
+    padding: 3px;
 
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -66,14 +83,14 @@
 
 /* ------------------------------------- */
 
-.symbols{
+.button{
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 30px;
 }
 
-.symbols:hover{
+.button:hover{
     background: rgb(109, 187, 86);
     cursor: pointer;
 }
@@ -82,11 +99,6 @@
     background: rgb(223, 95, 106);
 }
 
-#decimal:hover, #signal:hover{
+#comma:hover, #signalChange:hover{
     background: rgb(210, 224, 76);
-}
-
-
-#value{
-    font-size: 40px;
 }
