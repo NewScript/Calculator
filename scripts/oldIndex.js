@@ -1,169 +1,147 @@
-// const $formulation = document.getElementById('formulation');
-// const $representation = document.getElementById('value');
-// const $signal = document.getElementById('signal');
+const viewCalculation = {
+    calculationFormulation: document.getElementById('calculationFormulation'),
+    numberPresentation: document.getElementById('numberPresentation')
+};
 
-// const $action = document.getElementsByClassName('action');
-// const $allClear = $action[0];
-// const $clear = $action[1];
-// const $backSpace = $action[2];
+const action = {
+    allClear: document.getElementById('allClear'),
+    clear: document.getElementById('clear'),
+    backSpace: document.getElementById('backSpace')
+};
 
-// const $operands = document.getElementsByClassName('operand');
+const operator = {
+    sum: document.getElementById('sum'),
+    subtraction: document.getElementById('subtraction'),
+    division: document.getElementById('division'),
+    multiplication: document.getElementById('multiplication'),
+    result: document.getElementById('result')
+};
 
-// const $operators = document.getElementsByClassName('operator');
+const operand = document.getElementsByClassName('operand');
 
-// const $decimal = document.getElementById('decimal');
+const signalChange = document.getElementById('signalChange');
 
-// let $representValue = '';
-// let $integerValue = '';
-// let $decimalValue = '';
+const comma = document.getElementById('comma');
 
-// let $flagComma = false;
-// let $flagSignal = true;
+//-------------------------------------------------------------
 
-// function representValue(){
-//     if (!$flagComma) {
-//         $representation.textContent = parseFloat($integerValue).toLocaleString('pt-BR');
-//     }else{
-//         $representation.textContent = `${parseFloat($integerValue).toLocaleString('pt-BR')},${$decimalValue}`;
-//     }
-// }
+let $strIntegerValue = '';
+let $strDecimalValue = '';
+let $strSignalValue = '';
+let $strFlagComma ={
+    comma:'',
+    indexComma:''
+};
 
-// function storeInteger(){
+//-------------------------------------------------------------
 
-// }
-
-// function storeDecimalNumber(){
-
-// }
-
-// function storeNumber(number){
-//     if (!$flagComma) {
-//         $integerValue += number;
-//     }else{
-//         $decimalValue += number;
-//     }
-//     // console.log('Inclusao: ' + $integerValue, $decimalValue);
-// }
-
-// function allClear() {
-//     $formulation.textContent = '0';
-//     $representation.textContent = '0';
-//     $integerValue = '';
-//     $decimalValue = '';
-//     $flagComma = false;
-// };
-
-// function clear() {
-//     $representation.textContent = '0';
-//     $integerValue = '';
-//     $decimalValue = '';
-//     $flagComma = false;
-// };
-
-function backSpace() {
-
-    let indexLetterToErase = (($representation.textContent).length - 1);
-    let letterToErase = $representation.textContent.charAt(indexLetterToErase);
-
-    let indexIntegerValueToErase = (($integerValue).length - 1);
-    let integerToErase = $representation.textContent.charAt(indexIntegerValueToErase);
-    
-    let indexDecimalValueToErase = (($decimalValue).length - 1);
-    let decimalToErase = $representation.textContent.charAt(indexDecimalValueToErase);
-
-    if(letterToErase === ','){
-        let temp = ($representation.textContent).slice(0, indexLetterToErase);
-        $representation.textContent = temp;
-        $flagComma = false;
-        return;
-    }
-
-    if(letterToErase === '.'){
-        let temp = ($representation.textContent).slice(0, indexLetterToErase);
-        $representation.textContent = temp;
-        return;
-    };
-
-    if($flagComma){
-
-        let tempRepresentation = ($representation.textContent).slice(0, indexLetterToErase);
-        let tempDecimal= ($decimalValue).slice(0, indexDecimalValueToErase);
-
-        $representation.textContent = tempRepresentation;
-        $decimalValue = tempDecimal;
-        return;
-
-    }else{
-
-        let tempRepresentation = ($representation.textContent).slice(0, indexLetterToErase);
-        let tempInteger = ($integerValue).slice(0, indexIntegerValueToErase);
-        
-        if(tempRepresentation > 1){
-            $representation.textContent = tempRepresentation;
-            $integerValue = tempInteger;
-            return;
-        }else{
-            $representation.textContent = '0';
-            $integerValue = '';
-            $decimalValue = '';
-        }
-
-    }  
-    
+function clearValues(){
+    $strIntegerValue = '';
+    $strDecimalValue = '';
+    $strSignalValue = '';
+    $strFlagComma.comma = '';
+    $strFlagComma.indexComma = '';
 }
 
-// function maximumCharactersAllowed(character) {
-//     return ( $integerValue.length + $decimalValue.length  ) < character ? true : false;
-// }
+function numberPresentation(){
+    viewCalculation.numberPresentation.textContent = 
+        `${$strSignalValue}${parseFloat($strIntegerValue).toLocaleString('pt-BR')}${$strFlagComma.comma}${$strDecimalValue}`;
+};
 
-// function includeNumber(e) {
-//     if (maximumCharactersAllowed(10)) {
-//         storeNumber(e.target.id);
-//         representValue();
-//     }
-// }
+function storeNumber(number){
+    if (!$strFlagComma.comma) {
+        $strIntegerValue += number.toString();
+    }else{
+        $strDecimalValue += number.toString();
+    };
+};
 
-// function formulation(e) {
+function allClear() {
+    clearValues();
+    viewCalculation.numberPresentation.textContent = '0';
+    viewCalculation.calculationFormulation.textContent = '0';
+};
 
-// }
+function clear(){
+    clearValues();
+    viewCalculation.numberPresentation.textContent = '0';
+};
 
-// function clearPointsOfANumber() {
-//     let temp = $representation.textContent.replace(/\./g, '');
-//     $representation.textContent = temp;
-// };
+function maximumCharactersAllowed(number) {
+    return ( $strIntegerValue.length + $strDecimalValue.length  ) < number ? true : false;
+}
 
-// function includeComma() {
-//     if (!$flagComma) {
-//         $representation.textContent += ',';
-//         $flagComma = true;
-//     }
-// }
+function includeNumber(e) {
+    if (maximumCharactersAllowed(10)) {
+        storeNumber(e.target.id);
+        numberPresentation();
+    };
+};
 
-// function changeSign(){
-//     if($flagSignal){
-//         $integerValue = '-'+$integerValue;
-//         $flagSignal = false;
-//     }else{
-//         $integerValue = $integerValue.slice(1);
-//         $flagSignal = true;
-//     }
-//     representValue();
-//     console.log($integerValue);
-//     console.log('chamou changeSign');
-// }
+function includeComma() {
+    if (!$strFlagComma.comma) {
+        $strFlagComma.comma = ',';
+        numberPresentation();
+        $strFlagComma.indexComma = (viewCalculation.numberPresentation.textContent).indexOf(',');
+    };
+};
 
-// $allClear.addEventListener('click', allClear);
-// $clear.addEventListener('click', clear);
-// $backSpace.addEventListener('click', backSpace);
+function changeSign(){
+    if(!$strSignalValue){
+        $strSignalValue = '-';
+        numberPresentation();
+    }else{
+        $strSignalValue = '';
+        numberPresentation();
+    };
+};
 
-// for (const iterator of $operands) {
-//     iterator.addEventListener('click', includeNumber);
-// }
+function bsNumberPresentation(){
+    let indexOfTheCharacterToBeDeleted = ((viewCalculation.numberPresentation.textContent).length - 1);
+    let letterToErase = viewCalculation.numberPresentation.textContent.charAt(indexOfTheCharacterToBeDeleted);
+    viewCalculation.numberPresentation.textContent = (viewCalculation.numberPresentation.textContent).slice(0, indexOfTheCharacterToBeDeleted);
+    if(indexOfTheCharacterToBeDeleted === 0){
+        viewCalculation.numberPresentation.textContent = '0';
+        maximumCharactersAllowed(0);
+    };
+    if(letterToErase === ','){
+        $strFlagComma.comma = '';
+        $strFlagComma.indexComma = '';
+    };
+    if(letterToErase === '-'){
+        $strSignalValue = '';
+    };
+}
 
-// for (const iterator of $operators) {
-//     iterator.addEventListener('click', formulation);
-// }
+function bsValues(){
+    let lengthNumber = ((viewCalculation.numberPresentation.textContent).length);
+    if($strFlagComma.indexComma){
+        $strDecimalValue = (viewCalculation.numberPresentation.textContent).slice($strFlagComma.indexComma + 1, lengthNumber);
+    }else{
+        viewCalculation.numberPresentation.textContent = viewCalculation.numberPresentation.textContent.replace(/[-.]/g, '');
+        $strIntegerValue = (viewCalculation.numberPresentation.textContent).slice(0, lengthNumber);
+    };
+};
 
-// $decimal.addEventListener('click', includeComma);
+function backSpace() {
+    bsNumberPresentation();
+    bsValues();
+    console.log('Integer - ' + $strIntegerValue);
+    console.log('Decimal - ' + $strDecimalValue);
+};
 
-// $signal.addEventListener('click', changeSign);
+//-------------------------------------------------------------
+
+action.allClear.addEventListener('click', allClear);
+
+action.clear.addEventListener('click', clear);
+
+action.backSpace.addEventListener('click', backSpace);
+
+for (const iterator of operand) {
+    iterator.addEventListener('click', includeNumber);
+}
+
+comma.addEventListener('click', includeComma);
+
+signalChange.addEventListener('click', changeSign);
